@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.humberto.my_sample_compose.ui.theme.MysamplecomposeTheme
@@ -28,7 +29,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MysamplecomposeTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     InitView(contactList = getContacts())
                 }
@@ -51,7 +51,7 @@ fun AppTopBar() {
     val activity = (LocalContext.current as? Activity)
     TopAppBar(
         title = {
-            Text(text = "Lista de contatos")
+            Text(text = stringResource(id = R.string.title))
         },
         navigationIcon = {
             IconButton(
@@ -59,7 +59,10 @@ fun AppTopBar() {
                     activity?.finish()
                 }
             ) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "Botão voltar")
+                Icon(
+                    Icons.Filled.ArrowBack,
+                    stringResource(id = R.string.navigation_icon_content_description)
+                )
             }
         }
     )
@@ -83,7 +86,7 @@ fun ContactCard(contactModel: ContactModel) {
     ) {
         Image(
             painter = painterResource(id = contactModel.photo),
-            contentDescription = "Foto de perfil do contato",
+            contentDescription = stringResource(id = R.string.contact_icon_content_description),
             modifier = Modifier
                 .size(70.dp)
                 .clip(CircleShape),
@@ -124,7 +127,7 @@ private fun favoriteIconClick(icon: MutableState<Int>, contactModel: ContactMode
     }
 }
 
-fun getContacts() = listOf(
+private fun getContacts() = listOf(
     ContactModel("Goku", "11934659874", R.drawable.goku_avatar),
     ContactModel("Vegeta", "11978965412", R.drawable.vegeta_avatar),
     ContactModel("Jiren", "11978452321", R.drawable.jiren_avatar),
